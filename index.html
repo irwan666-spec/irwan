@@ -1,0 +1,98 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💝</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-start: #ffafbd; --bg-end: #ffc3a0;
+            --btn: #ff6b6b; --btn-hover: #ff8787; --text: #ff4757;
+        }
+        body {
+            margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center;
+            background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+            font-family: 'Poppins', sans-serif; overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9); padding: 2rem; border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1); text-align: center; max-width: 500px; width: 90%; z-index: 10;
+        }
+        .cute-btn {
+            background: var(--btn); border: none; padding: 12px 25px; margin: 10px;
+            border-radius: 30px; color: white; font-weight: 600; cursor: pointer; transition: 0.3s;
+        }
+        .cute-btn:hover { transform: scale(1.1); background: var(--btn-hover); }
+        .hidden { display: none; }
+        .floating { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .heart { position: absolute; font-size: 2rem; animation: float 15s linear infinite; }
+        @keyframes float { 
+            0% { transform: translateY(110vh); opacity: 1; } 
+            100% { transform: translateY(-10vh); opacity: 0; } 
+        }
+        .music-controls { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+        table { width: 100%; margin: 15px 0; border-collapse: collapse; background: rgba(255,255,255,0.5); border-radius: 10px; }
+        td { padding: 10px; border-bottom: 1px solid rgba(255, 107, 107, 0.1); color: var(--text); }
+    </style>
+</head>
+<body>
+    <div class="floating" id="bgLayer"></div>
+    <div class="music-controls">
+        <button id="mBtn" class="cute-btn" style="padding: 8px 15px; font-size: 0.8rem;">🎵 Play Music</button>
+        <audio id="audio" loop><source src="https://res.cloudinary.com/dncywqfpb/video/upload/v1738399057/music_qrhjvy.mp3" type="audio/mpeg"></audio>
+    </div>
+    <div class="container">
+        <h1 style="color: var(--text); font-family: 'Dancing Script';">lynette, my love...</h1>
+        <div id="q1">
+            <h2>Do you like me?</h2>
+            <button class="cute-btn" onclick="next(2)">Yes</button>
+            <button class="cute-btn" onmouseover="move(this)">No</button>
+        </div>
+        <div id="q2" class="hidden">
+            <h2>How much do you love me?</h2>
+            <input type="range" min="0" max="10000" value="100" style="width:100%" id="meter">
+            <p style="color: var(--text); font-weight: bold;">This much! <span id="v">100</span>%</p>
+            <button class="cute-btn" onclick="next(3)">Next ❤️</button>
+        </div>
+        <div id="q3" class="hidden">
+            <h2>Are you free on February 13th, 2026? 🌹</h2>
+            <table>
+                <tr><td><b>11:00 AM</b></td><td>Our Valentines Start ❤️</td></tr>
+                <tr><td><b>12:00 PM</b></td><td>Lunch Time 🍴</td></tr>
+                <tr><td><b>01:00 PM</b></td><td>Doing our activities 📸</td></tr>
+                <tr><td><b>05:00 PM</b></td><td>Night market 🍡</td></tr>
+                <tr><td><b>08:00 PM</b></td><td>End of the Day ✨</td></tr>
+            </table>
+            <button class="cute-btn" onclick="next(4)">Yes!</button>
+            <button class="cute-btn" onmouseover="move(this)">No</button>
+        </div>
+        <div id="final" class="hidden">
+            <h2 style="color: var(--text); font-size: 2rem;">Yay! 🎉</h2>
+            <p style="color: var(--text);">Now we will see each other later and give a big warm hug and a huge kiss!</p>
+            <p style="font-size: 2rem;">🎁💖🤗💝💋❤️💕</p>
+            <p style="color: var(--text); font-weight: bold;">Friday, 13/2/2026 📍 KK</p>
+        </div>
+    </div>
+    <script>
+        function move(b) { b.style.position = 'fixed'; b.style.left = Math.random()*80+'vw'; b.style.top = Math.random()*80+'vh'; }
+        function next(n) {
+            document.getElementById('q1').classList.add('hidden');
+            document.getElementById('q2').classList.add('hidden');
+            document.getElementById('q3').classList.add('hidden');
+            if(n==2) document.getElementById('q2').classList.remove('hidden');
+            if(n==3) document.getElementById('q3').classList.remove('hidden');
+            if(n==4) { document.getElementById('final').classList.remove('hidden'); for(let i=0; i<30; i++) spawn('💖'); }
+        }
+        document.getElementById('meter').oninput = function() { document.getElementById('v').innerText = this.value; };
+        function spawn(t) {
+            const e = document.createElement('div'); e.className = 'heart'; e.innerHTML = t;
+            e.style.left = Math.random()*100+'vw'; e.style.animationDuration = (Math.random()*10+5)+'s';
+            document.getElementById('bgLayer').appendChild(e);
+        }
+        setInterval(() => spawn('❤️'), 1000);
+        const a = document.getElementById('audio');
+        document.getElementById('mBtn').onclick = () => { a.paused ? a.play() : a.pause(); };
+    </script>
+</body>
+</html>
